@@ -1,0 +1,55 @@
+HELP.md
+target/
+.mvn/wrapper/maven-wrapper.jar
+!**/src/main/**/target/
+!**/src/test/**/target/
+
+### STS ###
+.apt_generated
+.classpath
+.factorypath
+.project
+.settings
+.springBeans
+.sts4-cache
+
+### IntelliJ IDEA ###
+.idea
+*.iws
+*.iml
+*.ipr
+
+### NetBeans ###
+/nbproject/private/
+/nbbuild/
+/dist/
+/nbdist/
+/.nb-gradle/
+build/
+!**/src/main/**/build/
+!**/src/test/**/build/
+
+### VS Code ###
+.vscode/
+
+# Arquivos de Build do Android / React Native
+frontend/app/android/app/.cxx/
+
+# Arquivos de Build e Dependências
+node_modules/
+
+# Exclui arquivos de build do Android que causam "Filename too long"
+# É crucial manter os arquivos de configuração para outros desenvolvedores
+frontend/app/android/
+!frontend/app/android/gradlew
+!frontend/app/android/gradlew.bat
+!frontend/app/android/settings.gradle
+!frontend/app/android/build.gradle
+!frontend/app/android/app/build.gradle
+!frontend/app/android/app/src/main/AndroidManifest.xml
+
+# Arquivos de log e cache
+*.log
+.DS_Store
+.vscode/
+.idea/
