@@ -42,4 +42,9 @@ public class TaskService {
     public void deletarTarefa(Long id) {
         repository.deleteById(id);
     }
+
+    public List<Task> buscarPorUsuario(String uid) {
+    return repository.findByUid(uid);
+    }
+
 }

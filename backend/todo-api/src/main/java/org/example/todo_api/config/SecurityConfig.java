@@ -1,26 +1,19 @@
 package org.example.todo_api.config;
 
+import org.example.todo_api.security.FirebaseTokenFilter;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-import org.springframework.security.web.SecurityFilterChain;
-import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.boot.web.servlet.FilterRegistrationBean;
 
 @Configuration
-@EnableWebSecurity
 public class SecurityConfig {
 
     @Bean
-    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-        http
-                .csrf().disable() // desativa CSRF para teste
-                .authorizeHttpRequests()
-                .requestMatchers("/tarefas/**").permitAll() // libera a rota /tarefas
-                .anyRequest().authenticated()
-                .and()
-                .httpBasic(); // opcional, para outras rotas
-
-        return http.build();
+    public FilterRegistrationBean<FirebaseTokenFilter> firebaseTokenFilter() {
+        FilterRegistrationBean<FirebaseTokenFilter> registrationBean = new FilterRegistrationBean<>();
+        registrationBean.setFilter(new FirebaseTokenFilter());
+        registrationBean.addUrlPatterns("/tarefas/*"); // protege rotas de tarefas
+        registrationBean.setOrder(1);
+        return registrationBean;
     }
 }
-

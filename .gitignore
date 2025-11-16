@@ -53,3 +53,6 @@ frontend/app/android/
 .DS_Store
 .vscode/
 .idea/
+
+# Adicione ao .gitignore
+backend/todo-api/src/main/resources/firebase-service-account.json

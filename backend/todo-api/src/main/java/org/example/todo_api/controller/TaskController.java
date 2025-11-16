@@ -1,9 +1,12 @@
 package org.example.todo_api.controller;
 
+import jakarta.servlet.http.HttpServletRequest;
 import org.example.todo_api.model.Task;
 import org.example.todo_api.service.TaskService;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 
@@ -19,8 +22,24 @@ public class TaskController {
     }
 
     @GetMapping
-    public List<Task> listar() {
-        return service.listarTarefas();
+    public List<Task> listar(HttpServletRequest request) {
+        String uid = (String) request.getAttribute("uid");
+        if (uid == null) {
+            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Usuário não autenticado");
+        }
+
+        return service.buscarPorUsuario(uid);
+    }
+
+    @PostMapping
+    public Task criar(@RequestBody Task task, HttpServletRequest request) {
+        String uid = (String) request.getAttribute("uid");
+        if (uid == null) {
+            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Usuário não autenticado");
+        }
+
+        task.setUid(uid);
+        return service.criarTarefa(task);
     }
 
     @GetMapping("/{id}")
@@ -28,11 +47,6 @@ public class TaskController {
         return service.buscarPorId(id)
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());
-    }
-
-    @PostMapping
-    public Task criar(@RequestBody Task task) {
-        return service.criarTarefa(task);
     }
 
     @PutMapping("/{id}")
